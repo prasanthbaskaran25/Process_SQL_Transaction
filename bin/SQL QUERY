@@ -1,0 +1,26 @@
+CREATE TABLE emp_table(
+Employee_Name TEXT  NOT NULL,
+Employee_age INT NOT NULL,
+Employee_Date_of_Joining DATE,
+Employee_city CHAR(100),
+Employee_salary decimal(16,8),
+Employee_email CHAR(50),
+Employee_gender CHAR(10),
+Employee_office_latitude VARCHAR(20),
+Employee_office_phone VARCHAR(20),
+Employee_designation CHAR(20),
+Employee_about_me CHAR(200),
+Employee_street_name CHAR(50),
+Employee_state_name CHAR(5),
+Employee_pinCode INT
+);
+
+-------------------------------------------------------------
+
+WITH empRowNum AS (
+    SELECT employee_designation, employee_salary,
+           ROW_NUMBER() OVER(PARTITION BY employee_designation ORDER BY employee_salary DESC) AS RowNum
+        FROM emp_table
+) select RowNum,employee_designation, employee_salary from empRowNum
+
+where RowNum in(1,2,3,4,5,6,7,8,9,10);
